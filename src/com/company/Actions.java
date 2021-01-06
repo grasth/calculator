@@ -1,23 +1,33 @@
 package com.company;
 
-public class Actions implements IActions{
-    @Override
-    public double addition(int first, int second) {
+public class Actions {
+    public int addition(int first, int second) {
+        return first+second;
+    }
+    public double addition(double first, double second) {
         return first+second;
     }
 
-    @Override
-    public double subtraction(int first, int second) {
+    public int subtraction(int first, int second) {
+        return first-second;
+    }
+    public double subtraction(double first, double second) {
         return first-second;
     }
 
-    @Override
     public double division(int first, int second) {
         return first/second;
     }
 
-    @Override
+    public double division(double first, double second) {return first/second;}
+
     public long multiplication(int first, int second) {
         return first*second;
     }
+
+    public double multiplication(double first, double second) {
+        return first*second;
+    }
+
+
 }

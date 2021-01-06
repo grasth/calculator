@@ -15,19 +15,19 @@ public class Parsing {
             switch (chars[i]) {
                 case '*':
                     queueMove = Arrays.copyOf(queueMove, queueMove.length + 1);
-                    queueMove[queueMove.length-1] = '*';
+                    queueMove[queueMove.length - 1] = '*';
                     break;
                 case '/':
                     queueMove = Arrays.copyOf(queueMove, queueMove.length + 1);
-                    queueMove[queueMove.length-1] = '/';
+                    queueMove[queueMove.length - 1] = '/';
                     break;
                 case '-':
                     queueMove = Arrays.copyOf(queueMove, queueMove.length + 1);
-                    queueMove[queueMove.length-1] = '-';
+                    queueMove[queueMove.length - 1] = '-';
                     break;
                 case '+':
                     queueMove = Arrays.copyOf(queueMove, queueMove.length + 1);
-                    queueMove[queueMove.length-1] = '+';
+                    queueMove[queueMove.length - 1] = '+';
                     break;
                 default:
                     break;
@@ -38,16 +38,18 @@ public class Parsing {
     }
 
     public double match(String str, String move) throws Exception {
-        String[] numbers = str.split(move);
-        switch (str) {
+
+        String[] numbers = str.split("[" + move + "]");
+
+        switch (move) {
             case "*":
-                return actions.multiplication(Integer.parseInt(numbers[0]), Integer.parseInt(numbers[1]));
+                    return actions.multiplication(Double.parseDouble(numbers[0]), Double.parseDouble(numbers[1]));
             case "/":
-                return actions.division(Integer.parseInt(numbers[0]), Integer.parseInt(numbers[1]));
+                    return actions.division(Double.parseDouble(numbers[0]), Double.parseDouble(numbers[1]));
             case "-":
-                return actions.subtraction(Integer.parseInt(numbers[0]), Integer.parseInt(numbers[1]));
+                    return actions.subtraction(Double.parseDouble(numbers[0]), Double.parseDouble(numbers[1]));
             case "+":
-                return actions.addition(Integer.parseInt(numbers[0]), Integer.parseInt(numbers[1]));
+                    return actions.addition(Double.parseDouble(numbers[0]), Double.parseDouble(numbers[1]));
             default:
                 throw new Exception("Не ожиданная ошибка");
         }

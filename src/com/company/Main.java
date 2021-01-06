@@ -13,17 +13,17 @@ public class Main {
     private static String example;
 
     public static void main(String[] args) throws Exception {
+        String result = "";
         System.out.print("Write your task: ");
         example = consoleReader.next();
 
         if (validation.validation(example)) {
-            System.out.println("Goood!");
-            util.Move(util.arrangeActions(parsing.moves(example)), example);
+            result = util.Move(util.arrangeActions(parsing.moves(example)), example);
         } else {
             throw new Exception("Error validation example");
         }
 
-        System.out.println("Result: " + example);
+        System.out.println("Result: " + result);
 
     }
 }
