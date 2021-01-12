@@ -1,8 +1,6 @@
 package com.company;
 
 public class Validation {
-    private char[] action = {'+','-','/','*'};
-
     public boolean validation(String example) throws Exception {
         example = example.replaceAll("\\s", "");
         char[] chars = example.toCharArray();
@@ -22,5 +20,4 @@ public class Validation {
         }
         return true;
     }
-
 }

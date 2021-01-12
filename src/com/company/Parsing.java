@@ -1,10 +1,13 @@
 package com.company;
 
 import java.util.Arrays;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Parsing {
 
     private static final Actions actions = new Actions();
+
 
     public char[] moves(String example) {
         example = example.replaceAll("\\s", "");
@@ -33,7 +36,6 @@ public class Parsing {
                     break;
             }
         }
-
         return queueMove;
     }
 
@@ -43,15 +45,25 @@ public class Parsing {
 
         switch (move) {
             case "*":
-                    return actions.multiplication(Double.parseDouble(numbers[0]), Double.parseDouble(numbers[1]));
+                return Math.round(actions.multiplication(Double.parseDouble(numbers[0]), Double.parseDouble(numbers[1])) * 100) / 100D;
             case "/":
-                    return actions.division(Double.parseDouble(numbers[0]), Double.parseDouble(numbers[1]));
+                return Math.round(actions.division(Double.parseDouble(numbers[0]), Double.parseDouble(numbers[1])) * 100) / 100D;
             case "-":
-                    return actions.subtraction(Double.parseDouble(numbers[0]), Double.parseDouble(numbers[1]));
+                return Math.round(actions.subtraction(Double.parseDouble(numbers[0]), Double.parseDouble(numbers[1])) * 100) / 100D;
             case "+":
-                    return actions.addition(Double.parseDouble(numbers[0]), Double.parseDouble(numbers[1]));
+                return Math.round(actions.addition(Double.parseDouble(numbers[0]), Double.parseDouble(numbers[1])) * 100) / 100D;
             default:
                 throw new Exception("Не ожиданная ошибка");
         }
+    }
+
+    public String getAct(String example, char action) {
+        Pattern pattern = Pattern.compile("(([-])?((\\d*([.]\\d+))|(\\d+)))[" + action + "](([-])?((\\d*([.]\\d+))|(\\d+)))");
+        Matcher matcher = pattern.matcher(example);
+        while (matcher.find()) {
+            return matcher.group(1) + action + matcher.group(7);
+        }
+        return null;
+
     }
 }
