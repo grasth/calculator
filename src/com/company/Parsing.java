@@ -39,29 +39,31 @@ public class Parsing {
         return queueMove;
     }
 
-    public double match(String str, String move) throws Exception {
-
-        String[] numbers = str.split("[" + move + "]");
-
+    public double match(String first, String second, String move) throws Exception {
         switch (move) {
             case "*":
-                return Math.round(actions.multiplication(Double.parseDouble(numbers[0]), Double.parseDouble(numbers[1])) * 100) / 100D;
+                return Math.round(actions.multiplication(Double.parseDouble(first), Double.parseDouble(second)) * 100) / 100D;
             case "/":
-                return Math.round(actions.division(Double.parseDouble(numbers[0]), Double.parseDouble(numbers[1])) * 100) / 100D;
+                return Math.round(actions.division(Double.parseDouble(first), Double.parseDouble(second)) * 100) / 100D;
             case "-":
-                return Math.round(actions.subtraction(Double.parseDouble(numbers[0]), Double.parseDouble(numbers[1])) * 100) / 100D;
+                return Math.round(actions.subtraction(Double.parseDouble(first), Double.parseDouble(second)) * 100) / 100D;
             case "+":
-                return Math.round(actions.addition(Double.parseDouble(numbers[0]), Double.parseDouble(numbers[1])) * 100) / 100D;
+                return Math.round(actions.addition(Double.parseDouble(first), Double.parseDouble(second)) * 100) / 100D;
             default:
                 throw new Exception("Не ожиданная ошибка");
         }
     }
 
-    public String getAct(String example, char action) {
+    public String getAct(String example, char action) throws Exception {
         Pattern pattern = Pattern.compile("(([-])?((\\d*([.]\\d+))|(\\d+)))[" + action + "](([-])?((\\d*([.]\\d+))|(\\d+)))");
         Matcher matcher = pattern.matcher(example);
         while (matcher.find()) {
-            return matcher.group(1) + action + matcher.group(7);
+            double matchAct = match(matcher.group(1), matcher.group(7), Character.toString(action));
+            if (matchAct - (int) matchAct == 0 || matchAct + (int) matchAct == 0) {
+                return matcher.group(1) + action + matcher.group(7) + "=" + (int)match(matcher.group(1), matcher.group(7), Character.toString(action));
+            } else {
+                return matcher.group(1) + action + matcher.group(7) + "=" + match(matcher.group(1), matcher.group(7), Character.toString(action));
+            }
         }
         return null;
 
